@@ -37,3 +37,7 @@ Build the backend service modules in this order:
 3. Chart engine + KP tables.
 4. Dasha/transit + event finder.
 5. UI/reporting and chart database.
+
+## Implemented module status
+
+- ✅ Milestone order step 1 started: `astro_engine` backend module integrated with a Swiss Ephemeris provider boundary and deterministic UTC normalization.
