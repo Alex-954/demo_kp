@@ -45,3 +45,18 @@ Build the backend service modules in this order:
 - ✅ Milestone order step 3 completed: `chart_engine` now generates chart bundles and KP cusp/star/sub decomposition tables.
 - ✅ Milestone order step 4 completed: `kp_analysis` + `event_finder` modules now provide dasha schedule generation, transit contact analysis, and event matching.
 - ✅ Milestone order step 5 completed: `reporting` and `storage` modules now provide text report generation and chart backup/restore persistence.
+
+## Run the application
+
+You can now run an end-to-end KP analysis as a CLI app:
+
+```bash
+kp-app \
+  --chart-id demo-1 \
+  --country IN \
+  --postal 560001 \
+  --birth-local 1990-08-24T13:45:00 \
+  --transit-utc 2026-02-20T05:30:00+00:00
+```
+
+The command prints a KP report and writes a JSON chart backup (default `charts_backup.json`).
