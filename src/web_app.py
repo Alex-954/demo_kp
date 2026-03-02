@@ -92,21 +92,46 @@ def render_page(result: dict | None = None, error: str | None = None, input_valu
         return escape(values.get(name, ""))
 
     html = [
-        "<!doctype html><html><head><meta charset='utf-8'><title>KP Astrology Web Application</title>",
-        "<style>body{font-family:Arial;margin:2rem;background:#f8fafc}.card{background:#fff;border:1px solid #cbd5e1;padding:1rem;margin-bottom:1rem;border-radius:8px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #e2e8f0;padding:.35rem}</style>",
-        "</head><body><h1>KP Astrology Web Application</h1>",
-        "<div class='card'><form method='post' action='/analyze'>",
-        f"Country <input name='country_code' value='{field('country_code')}' required> ",
-        f"Postal <input name='postal_code' value='{field('postal_code')}' required><br><br>",
-        f"Birth <input name='birth_local' value='{field('birth_local')}' required> ",
-        f"Transit <input name='transit_local' value='{field('transit_local')}' required><br><br>",
-        f"Allowed lords <input name='allowed_lords' value='{field('allowed_lords')}'><br><br>",
-        "<button type='submit'>Analyze</button></form></div>",
+        "<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'>",
+        "<title>KP Astrology Web Application</title>",
+        "<style>",
+        "body{font-family:Inter,Segoe UI,Arial,sans-serif;margin:0;background:#eef2ff;color:#0f172a}",
+        ".page{max-width:1080px;margin:0 auto;padding:2rem 1rem 3rem}",
+        ".hero{background:linear-gradient(135deg,#312e81,#1d4ed8);padding:2rem;border-radius:16px;color:#fff;box-shadow:0 14px 35px rgba(30,64,175,.25)}",
+        ".hero h1{margin:0 0 .5rem;font-size:2rem}",
+        ".hero p{margin:.25rem 0;color:#dbeafe}",
+        ".grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}",
+        ".card{background:#fff;border:1px solid #cbd5e1;padding:1rem;margin-top:1rem;border-radius:12px;box-shadow:0 3px 10px rgba(15,23,42,.05)}",
+        ".stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-top:1rem}",
+        ".stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:.75rem;border-radius:10px}",
+        ".stat strong{display:block;font-size:1.25rem;color:#fff}",
+        "label{font-size:.9rem;color:#334155;font-weight:600}",
+        "input{width:100%;padding:.5rem;border-radius:8px;border:1px solid #cbd5e1;margin-top:.3rem}",
+        "button{background:#2563eb;color:#fff;border:none;padding:.7rem 1rem;border-radius:10px;font-weight:700;cursor:pointer}",
+        "button:hover{background:#1d4ed8}",
+        "table{border-collapse:collapse;width:100%;font-size:.92rem}",
+        "th,td{border:1px solid #e2e8f0;padding:.4rem;text-align:left}",
+        "th{background:#f8fafc}",
+        "pre{white-space:pre-wrap;background:#f8fafc;padding:1rem;border-radius:8px;border:1px solid #e2e8f0}",
+        ".error{border-color:#fecaca;background:#fef2f2;color:#b91c1c}",
+        "</style></head><body><main class='page'>",
+        "<section class='hero'><h1>KP Astrology Analyzer</h1><p>Generate natal charts, transit contacts, and event windows from postal-code based location resolution.</p>",
+        "<div class='stats'><div class='stat'><strong>5</strong>Analysis engines</div><div class='stat'><strong>1-click</strong>Report generation</div><div class='stat'><strong>JSON</strong>API endpoints included</div></div></section>",
+        "<section class='card'><h2>Run analysis</h2><form method='post' action='/analyze'><div class='grid'>",
+        f"<label>Country code<input name='country_code' value='{field('country_code')}' required></label>",
+        f"<label>Postal code<input name='postal_code' value='{field('postal_code')}' required></label>",
+        f"<label>Birth datetime (local)<input name='birth_local' value='{field('birth_local')}' required></label>",
+        f"<label>Transit datetime (local)<input name='transit_local' value='{field('transit_local')}' required></label>",
+        f"<label style='grid-column:1/-1'>Allowed lords (comma separated)<input name='allowed_lords' value='{field('allowed_lords')}'></label>",
+        "</div><br><button type='submit'>Analyze chart</button></form></section>",
     ]
     if error:
-        html.append(f"<div class='card'><strong>Error:</strong> {escape(error)}</div>")
+        html.append(f"<div class='card error'><strong>Error:</strong> {escape(error)}</div>")
     if result:
         loc = result["location"]
+        html.append(
+            f"<div class='card'><h2>Summary</h2><div class='grid'><div><strong>Place</strong><p>{escape(loc.place_name)} ({loc.country_code} {loc.postal_code})</p></div><div><strong>Timezone</strong><p>{escape(loc.timezone)}</p></div><div><strong>Transit contacts</strong><p>{len(result['contacts'])}</p></div><div><strong>Event windows</strong><p>{len(result['events'])}</p></div></div></div>"
+        )
         html.append(
             f"<div class='card'><h2>Resolved location</h2><p>{escape(loc.place_name)} ({loc.country_code} {loc.postal_code}), tz {escape(loc.timezone)}</p></div>"
         )
@@ -117,7 +142,7 @@ def render_page(result: dict | None = None, error: str | None = None, input_valu
             )
         html.append("</table></div>")
         html.append("<div class='card'><h2>Text report</h2><pre>{}</pre></div>".format(escape(result["report"])))
-    html.append("</body></html>")
+    html.append("</main></body></html>")
     return "".join(html)
 
 
