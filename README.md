@@ -42,3 +42,6 @@ Build the backend service modules in this order:
 
 - ✅ Milestone order step 1 completed: `astro_engine` backend module integrated with a Swiss Ephemeris provider boundary and deterministic UTC normalization.
 - ✅ Milestone order step 2 completed: `location_service` module added for postal-code location resolution and IANA timezone conversion utilities.
+- ✅ Milestone order step 3 completed: `chart_engine` now generates chart bundles and KP cusp/star/sub decomposition tables.
+- ✅ Milestone order step 4 completed: `kp_analysis` + `event_finder` modules now provide dasha schedule generation, transit contact analysis, and event matching.
+- ✅ Milestone order step 5 completed: `reporting` and `storage` modules now provide text report generation and chart backup/restore persistence.
