@@ -45,3 +45,24 @@ Build the backend service modules in this order:
 - ✅ Milestone order step 3 completed: `chart_engine` now generates chart bundles and KP cusp/star/sub decomposition tables.
 - ✅ Milestone order step 4 completed: `kp_analysis` + `event_finder` modules now provide dasha schedule generation, transit contact analysis, and event matching.
 - ✅ Milestone order step 5 completed: `reporting` and `storage` modules now provide text report generation and chart backup/restore persistence.
+
+
+## Web application
+
+A runnable web application is now included using the Python standard-library WSGI server and HTML rendering.
+
+Run it locally:
+
+```bash
+python -m src.web_app
+```
+
+Open `http://127.0.0.1:8000` and submit country code, postal code, birth and transit datetimes to generate:
+- natal chart planet table
+- transit contacts
+- event windows filtered by allowed dasha lords
+- printable text report
+
+JSON endpoints:
+- `GET /api/health`
+- `GET /api/location/{country_code}/{postal_code}`
