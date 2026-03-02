@@ -8,4 +8,5 @@ __all__ = [
     "event_finder",
     "reporting",
     "storage",
+    "application",
 ]
