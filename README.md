@@ -40,4 +40,5 @@ Build the backend service modules in this order:
 
 ## Implemented module status
 
-- ✅ Milestone order step 1 started: `astro_engine` backend module integrated with a Swiss Ephemeris provider boundary and deterministic UTC normalization.
+- ✅ Milestone order step 1 completed: `astro_engine` backend module integrated with a Swiss Ephemeris provider boundary and deterministic UTC normalization.
+- ✅ Milestone order step 2 completed: `location_service` module added for postal-code location resolution and IANA timezone conversion utilities.
